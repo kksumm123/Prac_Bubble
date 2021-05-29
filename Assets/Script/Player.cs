@@ -44,12 +44,12 @@ public class Player : MonoBehaviour
         {
             // 안찾아질때까지
             hitPos = hit.point;
-            hit = Physics2D.Raycast(hit.point, Vector2.left, 1, wallLayer);
-        } while (hit.transform != null);
+            hit = Physics2D.Raycast(hit.point + Vector2.left, Vector2.left, 1, wallLayer);
+        } while (hit.transform == null);
         // 반대로 쏘자
-        hit = Physics2D.Raycast(hitPos + new Vector2(-1, 0), Vector2.right, 2, wallLayer);
+        hit = Physics2D.Raycast(hitPos + new Vector2(-2, 0), Vector2.right, 2, wallLayer);
         if (hit.transform)
-            maxX = hit.point.x - wallMinMaxOffsetX;
+            maxX = hit.point.x - col.radius - wallMinMaxOffsetX;
 
 
         // 왼쪽 벽 = 왼쪽 밖에서 안쪽으로 쏘자
@@ -58,12 +58,12 @@ public class Player : MonoBehaviour
         {
             // 안찾아질때까지
             hitPos = hit.point;
-            hit = Physics2D.Raycast(hit.point, Vector2.right, 1, wallLayer);
+            hit = Physics2D.Raycast(hit.point + Vector2.right, Vector2.right, 1, wallLayer);
         } while (hit.transform != null);
         // 반대로 쏘자
-        hit = Physics2D.Raycast(hitPos + new Vector2(1, 0), Vector2.left, 2, wallLayer);
+        hit = Physics2D.Raycast(hitPos + new Vector2(2, 0), Vector2.left, 2, wallLayer);
         if (hit.transform)
-            minX = hit.point.x + wallMinMaxOffsetX;
+            minX = hit.point.x + col.radius + wallMinMaxOffsetX;
     }
     #endregion
 
