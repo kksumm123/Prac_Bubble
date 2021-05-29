@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,20 @@ public class Player : MonoBehaviour
 {
     Rigidbody2D rigid;
     Animator anim;
-    public float speed = 0.1f;
+    enum StateType
+    {
+        Ground,
+        Jump,
+        JumpFall,
+        DownFall
+    }
+    StateType state;
+    [SerializeField] StateType State
+    {
+        get { return state; }
+        set { state = value; }
+    }
+    
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -14,12 +28,12 @@ public class Player : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
+        Jump();
     }
-
+    public float speed = 0.1f;
     private void Move()
     {
         float moveX = 0;
@@ -43,5 +57,21 @@ public class Player : MonoBehaviour
         }
         else
             anim.Play("idle");
+    }
+
+    public float jumpForce = 1100f;
+    private void Jump()
+    {
+        if (state != StateType.Ground)
+            return;
+
+        // ÈûÀ» Áà¾ß ÇÔ
+        // º®À» ¶Õ¾î¾ß ÇÔ
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            rigid.AddForce(new Vector2(0, jumpForce));
+            state = StateType.Jump;
+        }
+
     }
 }
