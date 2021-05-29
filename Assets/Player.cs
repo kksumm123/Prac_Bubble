@@ -43,7 +43,8 @@ public class Player : MonoBehaviour
         if (State == StateType.Jump && rigid.velocity.y < 0)
             State = StateType.JumpFall;
 
-        if (State == StateType.JumpFall || State == StateType.DownJumpFall)
+        if (State == StateType.JumpFall
+            || (State == StateType.DownJumpFall && col.isTrigger == false))
         {
             if (isGround())
             {
