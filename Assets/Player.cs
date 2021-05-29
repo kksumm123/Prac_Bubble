@@ -35,22 +35,21 @@ public class Player : MonoBehaviour
         CurState();
         Move();
         Jump();
+        DownJump();
     }
     #region State
-    void SetState(StateType _state)
-    {
-        State = _state;
-    }
-
     private void CurState()
     {
         if (State == StateType.Jump && rigid.velocity.y < 0)
-            SetState(StateType.JumpFall);
+            State = StateType.JumpFall;
 
-        if (State == StateType.JumpFall && isGround()) 
+        if (State == StateType.JumpFall || State == StateType.DownJumpFall)
         {
-            SetState(StateType.Ground);
-            SetTrigger(false);
+            if (isGround())
+            {
+                State = StateType.Ground;
+                SetTrigger(false);
+            }
         }
     }
 
@@ -132,8 +131,33 @@ public class Player : MonoBehaviour
             {
                 SetTrigger(true);
                 rigid.AddForce(new Vector2(0, jumpForce));
-                SetState(StateType.Jump);
+                State = StateType.Jump;
             }
         }
+    }
+
+    private void DownJump()
+    {
+        if (State == StateType.Ground)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                if (ChkUnderGround())
+                {
+                    SetTrigger(true);
+                    State = StateType.DownJumpFall;
+                }
+            }
+        }
+    }
+
+    public float underGroundOffsetY = -2.1f;
+    private bool ChkUnderGround()
+    {
+        var hit = Physics2D.Raycast(transform.position + new Vector3(0, underGroundOffsetY, 0)
+            , new Vector2(0, -1), 50, wallLayer);
+        Debug.Assert(wallLayer != 0, "wallLayerÁöÁ¤¾ÈµÊ");
+        Debug.Log($"{transform.position}, {hit.point}");
+        return (hit.transform != null);
     }
 }
