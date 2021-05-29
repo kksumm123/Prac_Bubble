@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
         Ground,
         Jump,
         JumpFall,
-        DownFall
+        DownJumpFall
     }
     [SerializeField]
     StateType state;
@@ -47,29 +47,32 @@ public class Player : MonoBehaviour
         if (State == StateType.Jump && rigid.velocity.y < 0)
             SetState(StateType.JumpFall);
 
-        if (State == StateType.JumpFall && isGround())
+        if (State == StateType.JumpFall && isGround()) 
+        {
             SetState(StateType.Ground);
+            SetTrigger(false);
+        }
     }
 
     public LayerMask wallLayer;
     public float chkGroundOffsetX = 0.4f;
     private bool isGround()
     {
-        if (ChkGroundRay(transform.position) == false)
-            return false;
-        if (ChkGroundRay(transform.position + new Vector3(-chkGroundOffsetX, 0, 0)) == false)
-            return false;
-        if (ChkGroundRay(transform.position + new Vector3(chkGroundOffsetX, 0, 0)) == false)
-            return false;
+        if (ChkGroundRay(transform.position))
+            return true;
+        if (ChkGroundRay(transform.position + new Vector3(-chkGroundOffsetX, 0, 0)))
+            return true;
+        if (ChkGroundRay(transform.position + new Vector3(chkGroundOffsetX, 0, 0)))
+            return true;
 
-        return true;
+        return false;
 
         bool ChkGroundRay(Vector3 pos)
         {
             // true = Ground
             // false = Aerial
             var hit = Physics2D.Raycast(pos, new Vector2(0, -1), 1.1f, wallLayer);
-            Debug.Assert(hit.transform != null, "wallLayer ÁöÁ¤¾ÈµÊ");
+            Debug.Assert(wallLayer != 0, "wallLayerÁöÁ¤¾ÈµÊ");
             return (hit.transform != null);
         }
     }
@@ -81,7 +84,10 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        SetTrigger(false);
+        if (State == StateType.DownJumpFall)
+        {
+            SetTrigger(false);
+        }
     }
     #endregion
 
@@ -101,10 +107,11 @@ public class Player : MonoBehaviour
             pos.x += moveX * speed;
             transform.position = pos;
 
+            float rotate = 0f;
             if (moveX < 0)
-                transform.rotation = new Quaternion(0, 180, 0, 0);
-            else
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+                rotate = 180f;
+
+            transform.rotation = new Quaternion(0, rotate, 0, 0);
             anim.Play("run");
         }
         else
