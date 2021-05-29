@@ -225,7 +225,6 @@ public class Player : MonoBehaviour
         var hit = Physics2D.Raycast(transform.position + new Vector3(0, underGroundOffsetY, 0)
             , new Vector2(0, -1), 50, wallLayer);
         Debug.Assert(wallLayer != 0, "wallLayer지정안됨");
-        Debug.Log($"{transform.position}, {hit.point}");
         return (hit.transform != null);
     }
     #endregion
