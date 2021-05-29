@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,20 +8,8 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     CircleCollider2D col;
-    enum StateType
-    {
-        Ground,
-        Jump,
-        JumpFall,
-        DownJumpFall
-    }
-    [SerializeField]
-    StateType state;
-    StateType State
-    {
-        get { return state; }
-        set { state = value; }
-    }
+    public GameObject bubble;
+    public Transform bubbleSpawnPosTr;
 
     void Start()
     {
@@ -36,7 +24,25 @@ public class Player : MonoBehaviour
         Move();
         Jump();
         DownJump();
+        ShootBubble();
     }
+
+    #region State Declare
+    enum StateType
+    {
+        Ground,
+        Jump,
+        JumpFall,
+        DownJumpFall
+    }
+    [SerializeField]
+    StateType state;
+    StateType State
+    {
+        get { return state; }
+        set { state = value; }
+    }
+    #endregion
     #region State
     private void CurState()
     {
@@ -72,11 +78,12 @@ public class Player : MonoBehaviour
             // true = Ground
             // false = Aerial
             var hit = Physics2D.Raycast(pos, new Vector2(0, -1), 1.1f, wallLayer);
-            Debug.Assert(wallLayer != 0, "wallLayerÁöÁ¤¾ÈµÊ");
+            Debug.Assert(wallLayer != 0, "wallLayerì§€ì •ì•ˆë¨");
             return (hit.transform != null);
         }
     }
     #endregion
+
     #region istrigger
     void SetTrigger(bool value)
     {
@@ -91,6 +98,7 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Move
     public float speed = 0.1f;
     private void Move()
     {
@@ -117,13 +125,15 @@ public class Player : MonoBehaviour
         else
             anim.Play("idle");
     }
+    #endregion
 
+    #region Jump
     public float jumpForce = 1100f;
     private void Jump()
     {
-        // ÈûÀ» Áà¾ß ÇÔ
-        // º®À» ¶Õ¾î¾ß ÇÔ
-        // ¶³¾îÁú¶© ¶ÕÀ¸¸é ¾ÈµÊ
+        // í˜ì„ ì¤˜ì•¼ í•¨
+        // ë²½ì„ ëš«ì–´ì•¼ í•¨
+        // ë–¨ì–´ì§ˆë• ëš«ìœ¼ë©´ ì•ˆë¨
 
 
         if (State == StateType.Ground)
@@ -136,7 +146,9 @@ public class Player : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region DownJump
     private void DownJump()
     {
         if (State == StateType.Ground)
@@ -157,8 +169,19 @@ public class Player : MonoBehaviour
     {
         var hit = Physics2D.Raycast(transform.position + new Vector3(0, underGroundOffsetY, 0)
             , new Vector2(0, -1), 50, wallLayer);
-        Debug.Assert(wallLayer != 0, "wallLayerÁöÁ¤¾ÈµÊ");
+        Debug.Assert(wallLayer != 0, "wallLayerì§€ì •ì•ˆë¨");
         Debug.Log($"{transform.position}, {hit.point}");
         return (hit.transform != null);
     }
+    #endregion
+
+    #region ShootBubble
+    private void ShootBubble()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
+    }
+    #endregion
 }
