@@ -6,7 +6,7 @@ public class Bubble : MonoBehaviour
 {
     Rigidbody2D rigid;
     Animator anim;
-    public int moveForwardFrame = 60;
+    public int moveForwardFrame = 6;
     public int currentFrame = 0;
     public float speed = 0.7f;
     public float gravityScale = -0.2f;
@@ -20,13 +20,16 @@ public class Bubble : MonoBehaviour
     void Update()
     {
         var pos = transform.position;
-        while (currentFrame++ < moveForwardFrame)
+        if (currentFrame++ < moveForwardFrame)
         {
             pos.x += speed * transform.forward.z;
+            transform.position = pos;
         }
-
-        rigid.gravityScale = gravityScale;
-        SetAnimation("Normal");
+        else
+        {
+            rigid.gravityScale = gravityScale;
+            SetAnimation("Normal");
+        }
     }
     #region Animator
     void SetAnimation(string value)

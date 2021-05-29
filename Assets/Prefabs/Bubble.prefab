@@ -156,5 +156,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForwardFrame: 6
   currentFrame: 0
-  speed: 3.97
+  speed: 0.7
   gravityScale: -0.2
