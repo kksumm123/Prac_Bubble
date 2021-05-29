@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 196422107206645234}
   - component: {fileID: 5916278054300796775}
   - component: {fileID: 49673841}
+  - component: {fileID: 5394645386431145829}
   m_Layer: 9
   m_Name: Bubble
   m_TagString: Untagged
@@ -158,3 +159,20 @@ MonoBehaviour:
   currentFrame: 0
   speed: 0.7
   gravityScale: -0.2
+  state: 0
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &5394645386431145829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7384227913992057857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baec10b05adc53d44a0163b6a6dff1da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 15
