@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 135071774408361809}
   - component: {fileID: 9095083746737575034}
   - component: {fileID: 8493985817324620951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,4 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d1c2d810c41a464d96cae9da3865402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  chkGroundOffsetX: 0.4
   speed: 0.1
+  jumpForce: 1100

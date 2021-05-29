@@ -15,12 +15,12 @@ public class Player : MonoBehaviour
         JumpFall,
         DownFall
     }
-    StateType state;
     [SerializeField]
+    StateType state;
     StateType State
     {
-        get { return state; }
-        set { state = value; }
+        get { return State; }
+        set { State = value; }
     }
 
     void Start()
@@ -39,15 +39,15 @@ public class Player : MonoBehaviour
     #region State
     void SetState(StateType _state)
     {
-        state = _state;
+        State = _state;
     }
 
     private void CurState()
     {
-        if (state == StateType.Jump && rigid.velocity.y < 0)
+        if (State == StateType.Jump && rigid.velocity.y < 0)
             SetState(StateType.JumpFall);
 
-        if (state == StateType.JumpFall && isGround())
+        if (State == StateType.JumpFall && isGround())
             SetState(StateType.Ground);
     }
 
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
         // ¶³¾îÁú¶© ¶ÕÀ¸¸é ¾ÈµÊ
 
 
-        if (state == StateType.Ground)
+        if (State == StateType.Ground)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {

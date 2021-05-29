@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 1459111199}
   - component: {fileID: 1459111198}
   - component: {fileID: 1459111197}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4190,6 +4190,10 @@ PrefabInstance:
     - target: {fileID: 7384227913992057857, guid: 0d60271ccbe980046945d54e832e5891, type: 3}
       propertyPath: m_Name
       value: Bubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384227913992057857, guid: 0d60271ccbe980046945d54e832e5891, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8996581581417229244, guid: 0d60271ccbe980046945d54e832e5891, type: 3}
       propertyPath: m_RootOrder
