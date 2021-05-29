@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
         DownJump();
         ShootBubble();
     }
+    #region Animator
+    void SetAnimation(string value)
+    {
+        anim.Play(value);
+    }
+    #endregion
 
     #region State Declare
     enum StateType
@@ -120,10 +126,14 @@ public class Player : MonoBehaviour
                 rotate = 180f;
 
             transform.rotation = new Quaternion(0, rotate, 0, 0);
-            anim.Play("run");
+            SetAnimation("run");
         }
         else
-            anim.Play("idle");
+        {
+            //if (anim.GetCurrentAnimatorStateInfo(0).IsName("jump") == false)
+            if (State == StateType.Ground)
+                SetAnimation("idle");
+        }
     }
     #endregion
 
@@ -143,6 +153,7 @@ public class Player : MonoBehaviour
                 SetTrigger(true);
                 rigid.AddForce(new Vector2(0, jumpForce));
                 State = StateType.Jump;
+                SetAnimation("jump");
             }
         }
     }
@@ -159,6 +170,7 @@ public class Player : MonoBehaviour
                 {
                     SetTrigger(true);
                     State = StateType.DownJumpFall;
+                    SetAnimation("jump");
                 }
             }
         }
@@ -180,7 +192,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            Instantiate(bubble, bubbleSpawnPosTr.position, transform.rotation);
         }
     }
     #endregion

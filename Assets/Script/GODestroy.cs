@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,15 +6,14 @@ using UnityEngine;
 public class GODestroy : MonoBehaviour
 {
     /// <summary>
-    /// 0º¸´Ù Å¬°æ¿ì È°¼ºÈ­ÈÄ destroyTimeÃÊ ÀÌÈÄ ÆÄ±«µÊ
+    /// 0ë³´ë‹¤ í´ê²½ìš° í™œì„±í™”í›„ destroyTimeì´ˆ ì´í›„ íŒŒê´´ë¨
     /// </summary>
     public float destroyTime;
 
-    // ¾÷µ¥ÀÌÆ® Á÷Àü¿¡
+    // ì—…ë°ì´íŠ¸ ì§ì „ì—
     private void Start()
     {
         if (destroyTime > 0)
             Destroy(gameObject, destroyTime);
     }
-
 }
