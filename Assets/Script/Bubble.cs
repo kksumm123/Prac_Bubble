@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,33 +20,70 @@ public class Bubble : MonoBehaviour
         rigid.gravityScale = 0;
         SetTrigger(true);
     }
-
+    public float nearPlayerCheckDistance = 1.9f;
     void FixedUpdate()
     {
         if (currentFrame++ < moveForwardFrame)
-        {
             FastMove();
-        }
         else
         {
-            State = StateType.FreeFly;
-            rigid.gravityScale = gravityScale;
-            SetAnimation("Normal");
-            SetTrigger(false);
+            float distance = Vector3.Distance(Player.instance.transform.position
+                    , transform.position);
+
+            if (distance < nearPlayerCheckDistance)
+            {
+                // 공룡이 인근에 있으면 자신(버블)을 터트리자
+                ExplosionByPlayer();
+            }
+            else
+            {
+                Normal();
+            }
         }
     }
 
-    
     #region Animator
     void SetAnimation(string value)
     {
         anim.Play(value);
     }
     #endregion
-    #region istrigger
+    #region Trigger
     void SetTrigger(bool value)
     {
         col.isTrigger = value;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        OnTouchedBubble(collision.transform);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        OnTouchedBubble(collision.transform);
+    }
+
+    private void OnTouchedBubble(Transform collisionTr)
+    {
+        if (State == StateType.FreeFly)
+        {
+            if (collisionTr.CompareTag("Player"))
+            {
+                ExplosionByPlayer();
+            }
+        }
+        else if (State == StateType.FastMove)
+        {
+            if (collisionTr.CompareTag("Monster"))
+            {
+                Debug.Log("적일 때 미구현");
+            }
+        }
+    }
+
+    private void ExplosionByPlayer()
+    {
+        Destroy(gameObject);
     }
     #endregion
     #region State Declare
@@ -63,7 +101,8 @@ public class Bubble : MonoBehaviour
         set { state = value; }
     }
     #endregion
-    #region Move
+
+    #region FastMove
     public LayerMask wallLayer;
     private void FastMove()
     {
@@ -86,6 +125,17 @@ public class Bubble : MonoBehaviour
                 pos.x = Mathf.Max(pos.x, hit.point.x);
         }
         transform.position = pos;
+    }
+    #endregion
+
+    #region Normal
+    private void Normal()
+    {
+        State = StateType.FreeFly;
+
+        rigid.gravityScale = gravityScale;
+        SetAnimation("Normal");
+        SetTrigger(false);
     }
     #endregion
 }

@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    internal static Player instance;
     Rigidbody2D rigid;
     Animator anim;
     CircleCollider2D col;
     public GameObject bubble;
     public Transform bubbleSpawnPosTr;
-    void Start()
+    private void Awake()
     {
+        instance = this;
         Application.targetFrameRate = 60;
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<CircleCollider2D>();
         CheckOutWall();
     }
-
     void Update()
     {
         CurState();
@@ -220,6 +221,7 @@ public class Player : MonoBehaviour
     }
 
     public float underGroundOffsetY = -2.1f;
+
     private bool ChkUnderGround()
     {
         var hit = Physics2D.Raycast(transform.position + new Vector3(0, underGroundOffsetY, 0)
