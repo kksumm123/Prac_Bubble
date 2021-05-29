@@ -19,8 +19,8 @@ public class Player : MonoBehaviour
     StateType state;
     StateType State
     {
-        get { return State; }
-        set { State = value; }
+        get { return state; }
+        set { state = value; }
     }
 
     void Start()
@@ -129,5 +129,4 @@ public class Player : MonoBehaviour
             }
         }
     }
-
 }
