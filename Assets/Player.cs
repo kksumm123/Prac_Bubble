@@ -32,8 +32,13 @@ public class Player : MonoBehaviour
         if (moveX != 0)
         {
             var pos = transform.position;
-            pos.x = moveX * speed;
+            pos.x += moveX * speed;
             transform.position = pos;
+
+            if (moveX < 0)
+                transform.rotation = new Quaternion(0, 180, 0, 0);
+            else
+                transform.rotation = new Quaternion(0, 0, 0, 0);
             anim.Play("run");
         }
         else
