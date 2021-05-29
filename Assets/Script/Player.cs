@@ -10,12 +10,13 @@ public class Player : MonoBehaviour
     CircleCollider2D col;
     public GameObject bubble;
     public Transform bubbleSpawnPosTr;
-
     void Start()
     {
+        Application.targetFrameRate = 60;
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<CircleCollider2D>();
+        CheckOutWall();
     }
 
     void Update()
@@ -26,6 +27,46 @@ public class Player : MonoBehaviour
         DownJump();
         ShootBubble();
     }
+    #region CheckOutWall
+    public float wallMinMaxOffsetX = 0.02f;
+    public float minX;
+    public float maxX;
+    void CheckOutWall()
+    {
+        // 레이를 쏴서 바깥벽 좌표값을 찾자
+        // 안찾아질때까지 안쪽으로 들어오면서 들어와서 반대로 스캔
+
+        // 오른쪽 벽 = 오른쪽 밖에서 안쪽으로 쏘자
+        RaycastHit2D hit;
+        Vector2 hitPos;
+        hit = Physics2D.Raycast(transform.position + new Vector3(100, 0), Vector2.left, 100, wallLayer);
+        do
+        {
+            // 안찾아질때까지
+            hitPos = hit.point;
+            hit = Physics2D.Raycast(hit.point, Vector2.left, 1, wallLayer);
+        } while (hit.transform != null);
+        // 반대로 쏘자
+        hit = Physics2D.Raycast(hitPos + new Vector2(-1, 0), Vector2.right, 2, wallLayer);
+        if (hit.transform)
+            maxX = hit.point.x - wallMinMaxOffsetX;
+
+
+        // 왼쪽 벽 = 왼쪽 밖에서 안쪽으로 쏘자
+        hit = Physics2D.Raycast(transform.position + new Vector3(-100, 0), Vector2.right, 100, wallLayer);
+        do
+        {
+            // 안찾아질때까지
+            hitPos = hit.point;
+            hit = Physics2D.Raycast(hit.point, Vector2.right, 1, wallLayer);
+        } while (hit.transform != null);
+        // 반대로 쏘자
+        hit = Physics2D.Raycast(hitPos + new Vector2(1, 0), Vector2.left, 2, wallLayer);
+        if (hit.transform)
+            minX = hit.point.x + wallMinMaxOffsetX;
+    }
+    #endregion
+
     #region Animator
     void SetAnimation(string value)
     {
@@ -119,6 +160,8 @@ public class Player : MonoBehaviour
         {
             var pos = transform.position;
             pos.x += moveX * speed;
+            pos.x = Mathf.Max(minX, pos.x);
+            pos.x = Mathf.Min(maxX, pos.x);
             transform.position = pos;
 
             float rotate = 0f;
