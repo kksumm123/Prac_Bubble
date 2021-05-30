@@ -30,7 +30,7 @@ public class Monster : MonoBehaviour
         pos.x += speed * transform.forward.z;
         transform.position = pos;
     }
-
+    #region CheckLoadExist
     RaycastHit2D hit;
     public LayerMask wallLayer;
     private void CheckLoadExist()
@@ -47,4 +47,5 @@ public class Monster : MonoBehaviour
         Gizmos.DrawRay(transform.position + new Vector3(colRadius * transform.forward.z, 0)
             , Vector2.down * (colRadius + 0.5f));
     }
+    #endregion
 }
