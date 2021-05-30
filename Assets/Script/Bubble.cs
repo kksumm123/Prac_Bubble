@@ -83,7 +83,7 @@ public class Bubble : MonoBehaviour
         {
             if (collisionTr.CompareTag("Monster"))
             {
-                Debug.Log("적일 때 미구현");
+                GrabMonster(collisionTr);
             }
         }
     }
@@ -103,7 +103,6 @@ public class Bubble : MonoBehaviour
         set { state = value; }
     }
     #endregion
-
 
     #region ExplosionBubble
     private void ExplosionByPlayer()
@@ -131,6 +130,24 @@ public class Bubble : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region GrabMonster
+    private void GrabMonster(Transform collisionTr)
+    {
+        // 몬스터를 숨기자
+        // 몬스터를 버블의 자식으로 돌리자
+        // 버블을 몬스터이름 + 1, 2, 3, 4 돌리자
+        collisionTr.gameObject.SetActive(false);
+        collisionTr.parent = transform;
+
+        StartCoroutine(GrabMonsterBubbleCo(collisionTr.name));
+    }
+
+    private IEnumerator GrabMonsterBubbleCo(string name)
+    {
+        yield return new WaitForSeconds(1);
+    }
+
     #endregion
 
     #region FastMove
