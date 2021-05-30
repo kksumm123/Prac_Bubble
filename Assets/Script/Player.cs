@@ -71,7 +71,8 @@ public class Player : MonoBehaviour
     #region Animator
     void SetAnimation(string value)
     {
-        anim.Play(value);
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName(value) == false)
+            anim.Play(value);
     }
     #endregion
 
@@ -170,7 +171,8 @@ public class Player : MonoBehaviour
                 rotate = 180f;
 
             transform.rotation = new Quaternion(0, rotate, 0, 0);
-            SetAnimation("run");
+            if (State == StateType.Ground)
+                SetAnimation("run");
         }
         else
         {
