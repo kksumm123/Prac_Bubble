@@ -4244,6 +4244,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6156869975309735984, guid: 0d60271ccbe980046945d54e832e5891, type: 3}
+      propertyPath: destroy.prefab
+      value: 
+      objectReference: {fileID: 6780807242458251068}
     - target: {fileID: 7384227913992057857, guid: 0d60271ccbe980046945d54e832e5891, type: 3}
       propertyPath: m_Name
       value: Bubble
@@ -4294,6 +4298,68 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d60271ccbe980046945d54e832e5891, type: 3}
+--- !u!1001 &6780807242458251067
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960616855940539482, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5553400735009561966, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+      propertyPath: m_Name
+      value: BubblePon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+--- !u!1 &6780807242458251068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5553400735009561966, guid: 967764f30aab8634b935f6f38d07f2dc, type: 3}
+  m_PrefabInstance: {fileID: 6780807242458251067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8528938969034719069
 PrefabInstance:
   m_ObjectHideFlags: 0
