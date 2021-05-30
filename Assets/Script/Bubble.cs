@@ -8,6 +8,8 @@ public class Bubble : MonoBehaviour
     Rigidbody2D rigid;
     CircleCollider2D col;
     Animator anim;
+    // 스태틱으로 둬야 개체당 할당이 아니라 클래스자체에 할당
+    static List<Bubble> bubbles = new List<Bubble>();
     public int moveForwardFrame = 6;
     public int currentFrame = 0;
     public float speed = 0.7f;
@@ -19,6 +21,11 @@ public class Bubble : MonoBehaviour
         anim = GetComponent<Animator>();
         rigid.gravityScale = 0;
         SetTrigger(true);
+        bubbles.Add(this);
+    }
+    private void OnDestroy()
+    {
+        bubbles.Remove(this);
     }
     public float nearPlayerCheckDistance = 1.9f;
     void FixedUpdate()
@@ -80,11 +87,6 @@ public class Bubble : MonoBehaviour
             }
         }
     }
-
-    private void ExplosionByPlayer()
-    {
-        Destroy(gameObject);
-    }
     #endregion
     #region State Declare
     enum StateType
@@ -99,6 +101,35 @@ public class Bubble : MonoBehaviour
     {
         get { return state; }
         set { state = value; }
+    }
+    #endregion
+
+
+    #region ExplosionBubble
+    private void ExplosionByPlayer()
+    {
+        // 주변 버블을 모으자
+        // 같이 터트리자
+        var nearBubbles = new List<Bubble>();
+
+        FindNearBubbles(this.transform, nearBubbles);
+        nearBubbles.ForEach(x => Destroy(x.gameObject));
+    }
+    public float nearBubbleCheckDistance = 2.2f;
+    void FindNearBubbles(Transform tr, List<Bubble> nearBubbles)
+    {
+        nearBubbles.Add(this);
+        foreach (var item in bubbles)
+        {
+            if (nearBubbles.Contains(item))
+                continue;
+            float distance = Vector2.Distance(tr.position, item.transform.position);
+            if (distance < nearBubbleCheckDistance)
+            {
+                nearBubbles.Add(item);
+                FindNearBubbles(item.transform, nearBubbles);
+            }
+        }
     }
     #endregion
 
