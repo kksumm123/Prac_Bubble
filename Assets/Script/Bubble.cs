@@ -14,6 +14,7 @@ public class Bubble : MonoBehaviour
     public int currentFrame = 0;
     public float speed = 0.7f;
     public float gravityScale = -0.2f;
+    public bool isGrabMonster = false;
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -134,6 +135,8 @@ public class Bubble : MonoBehaviour
     #region GrabMonster
     private void GrabMonster(Transform collisionTr)
     {
+        isGrabMonster = true;
+
         // 몬스터를 숨기자
         // 몬스터를 버블의 자식으로 돌리자
         collisionTr.gameObject.SetActive(false);
@@ -148,7 +151,7 @@ public class Bubble : MonoBehaviour
     {
         for (int i = 0; i < grabbedMonsterBubbleExplosionTime.Count; i++)
         {
-            anim.Play(collisionTr.GetComponent<Monster>().monsterName + (i + 1));
+            SetAnimation(collisionTr.GetComponent<Monster>().monsterName + (i + 1));
             yield return new WaitForSeconds(grabbedMonsterBubbleExplosionTime[i]);
         }
 
@@ -192,7 +195,8 @@ public class Bubble : MonoBehaviour
         State = StateType.FreeFly;
 
         rigid.gravityScale = gravityScale;
-        SetAnimation("Normal");
+        if (isGrabMonster == false)
+            SetAnimation("Normal");
         SetTrigger(false);
     }
     #endregion
