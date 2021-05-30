@@ -161,7 +161,7 @@ MonoBehaviour:
   gravityScale: -0.2
   nearPlayerCheckDistance: 1.9
   state: 0
-  nearBubbleCheckDistance: 6.46
+  nearBubbleCheckDistance: 2.2
   wallLayer:
     serializedVersion: 2
     m_Bits: 256
