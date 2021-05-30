@@ -136,16 +136,26 @@ public class Bubble : MonoBehaviour
     {
         // 몬스터를 숨기자
         // 몬스터를 버블의 자식으로 돌리자
-        // 버블을 몬스터이름 + 1, 2, 3, 4 돌리자
         collisionTr.gameObject.SetActive(false);
         collisionTr.parent = transform;
 
-        StartCoroutine(GrabMonsterBubbleCo(collisionTr.name));
+        // 버블을 몬스터이름 + 1, 2, 3, 4 돌리자
+        StartCoroutine(GrabbedMonsterBubbleCo(collisionTr));
     }
 
-    private IEnumerator GrabMonsterBubbleCo(string name)
+    public List<float> grabbedMonsterBubbleExplosionTime = new List<float>();
+    private IEnumerator GrabbedMonsterBubbleCo(Transform collisionTr)
     {
-        yield return new WaitForSeconds(1);
+        for (int i = 0; i < grabbedMonsterBubbleExplosionTime.Count; i++)
+        {
+            anim.Play(collisionTr.GetComponent<Monster>().monsterName + (i + 1));
+            yield return new WaitForSeconds(grabbedMonsterBubbleExplosionTime[i]);
+        }
+
+        // 시간내에 몬스터버블을 못 터트리면 탈출 및 버블 터트리기
+        collisionTr.parent = null;
+        collisionTr.gameObject.SetActive(true);
+        Destroy(gameObject);
     }
 
     #endregion
